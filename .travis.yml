@@ -8,19 +8,29 @@ python:
 cache:
   - pip
 
-env:
-  global:
-    # AWS CLI reads this variable automatically.
-    - AWS_DEFAULT_REGION=eu-west-1
+jobs:
+  include:
+    - language: python
+      python: 3.7
+      script:
+        - sam build --use-container --debug --template sam--python3.7.yml
+      # This block will be executed even if the "script" fails.
+      # Here we show there is not issue with Travis and the
+      # image can be downloaded.
+      after_script:
+        - docker pull amazon/aws-sam-cli-build-image-python3.7
+        - docker inspect amazon/aws-sam-cli-build-image-python3.7
 
-install:
-  - pip3 install awscli aws-sam-cli boto3
+    - language: node_js
+      node_js: 12
+      script:
+        - sam build --use-container --debug --template sam--node12.yml
+      # This block will be executed even if the "script" fails.
+      # Here we show there is not issue with Travis and the
+      # image can be downloaded.
+      after_script:
+        - docker pull amazon/aws-sam-cli-build-image-nodejs12.x
+        - docker inspect amazon/aws-sam-cli-build-image-nodejs12.x
 
-script:
-  - sam build --use-container --debug
-
-# This block will be executed even if the "script" fails.
-# Here we show there is not issue with Travis and the
-# image can be downloaded.
-after_script:
-  - docker pull amazon/aws-sam-cli-build-image-python3.7
+before_install:
+  - pip3 install aws-sam-cli

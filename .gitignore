@@ -3,5 +3,6 @@
 
 !/.gitignore
 !/.travis.yml
+!/README.md
 !/requirements.txt
-!/template.yml
+!/sam--*.yml
