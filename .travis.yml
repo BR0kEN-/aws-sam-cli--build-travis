@@ -18,6 +18,11 @@ jobs:
 
     - language: node_js
       node_js: 12
+      addons:
+        apt:
+          packages:
+            - python3
+            - python3-pip
       script:
         - pip3 install aws-sam-cli
         - sam build --use-container --debug --template sam--node12.yml
