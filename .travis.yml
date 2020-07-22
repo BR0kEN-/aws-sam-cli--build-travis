@@ -19,7 +19,7 @@ jobs:
     - language: node_js
       node_js: 12
       script:
-        - pip install aws-sam-cli
+        - pip3 install aws-sam-cli
         - sam build --use-container --debug --template sam--node12.yml
       # This block will be executed even if the "script" fails.
       # Here we show there is not issue with Travis and the
