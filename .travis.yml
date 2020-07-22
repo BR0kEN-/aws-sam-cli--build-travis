@@ -25,7 +25,7 @@ install:
 
 script:
   # Download the image manually and "sam build" will work.
-  - if [[ "$DOCKER_PULL_BEFORE" == "yes" ]]; then
+  - if [ "$DOCKER_PULL_BEFORE" == "yes" ]; then
         docker pull "amazon/aws-sam-cli-build-image-$SAM_RUNTIME"
     fi
   - sam build --use-container --debug --template "sam--$SAM_RUNTIME.yml"
