@@ -7,8 +7,6 @@ jobs:
     - language: python
       python: 3.7
       install:
-        - python3 --version
-        - python --version
         - pip3 install aws-sam-cli
       script:
         - sam build --use-container --debug --template sam--python3.7.yml
@@ -30,9 +28,6 @@ jobs:
             - python3-wheel
             - python3-setuptools
       install:
-        - ln -fs "$(which python3)" "$(which python)"
-        - python3 --version
-        - python --version
         - pip3 install aws-sam-cli
       script:
         - sam build --use-container --debug --template sam--node12.yml
