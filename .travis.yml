@@ -30,7 +30,7 @@ jobs:
             - python3-wheel
             - python3-setuptools
       install:
-        - ln -s "$(which python3)" "$(which python)"
+        - ln -fs "$(which python3)" "$(which python)"
         - python3 --version
         - python --version
         - pip3 install aws-sam-cli
