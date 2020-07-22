@@ -18,3 +18,9 @@ install:
 
 script:
   - sam build --use-container --debug
+
+# This block will be executed even if the "script" fails.
+# Here we show there is not issue with Travis and the
+# image can be downloaded.
+after_script:
+  - docker pull amazon/aws-sam-cli-build-image-python3.7
