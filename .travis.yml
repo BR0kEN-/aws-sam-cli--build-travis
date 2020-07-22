@@ -8,12 +8,18 @@ python:
 cache:
   - pip
 
+addons:
+  apt:
+    update: true
+
 env:
   jobs:
     - SAM_RUNTIME=nodejs12.x
     - SAM_RUNTIME=python3.7
 
 install:
+  - apt-get install --only-upgrade docker-ce -y
+  - docker info
   - pip3 install aws-sam-cli
 
 script:
