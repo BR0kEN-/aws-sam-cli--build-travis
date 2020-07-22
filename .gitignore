@@ -3,6 +3,7 @@
 
 !/.gitignore
 !/.travis.yml
+!/package.json
 !/README.md
 !/requirements.txt
 !/sam--*.yml

@@ -1,0 +1,7 @@
+{
+  "name": "aws-sam-cli--build-travis",
+  "version": "0.0.1",
+  "author": "Sergii Bondarenko <sb@firstvector.org>",
+  "repository": "https://github.com/BR0kEN-/aws-sam-cli--build-travis",
+  "description": "Running `sam build --use-container` on Travis fails to download Docker image"
+}
