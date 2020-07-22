@@ -10,8 +10,10 @@ cache:
 
 env:
   jobs:
-    - SAM_RUNTIME=nodejs12.x
-    - SAM_RUNTIME=python3.7
+    - SAM_RUNTIME=nodejs12.x DOCKER_PULL_BEFORE=no
+    - SAM_RUNTIME=nodejs12.x DOCKER_PULL_BEFORE=yes
+    - SAM_RUNTIME=python3.7 DOCKER_PULL_BEFORE=no
+    - SAM_RUNTIME=python3.7 DOCKER_PULL_BEFORE=yes
 
 install:
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -22,11 +24,8 @@ install:
   - pip3 install aws-sam-cli
 
 script:
+  # Download the image manually and "sam build" will work.
+  - if [[ "$DOCKER_PULL_BEFORE" == "yes" ]]; then
+        docker pull "amazon/aws-sam-cli-build-image-$SAM_RUNTIME"
+    fi
   - sam build --use-container --debug --template "sam--$SAM_RUNTIME.yml"
-
-# This block will be executed even if the "script" fails.
-# Here we show there is not issue with Travis and the
-# image can be downloaded.
-after_script:
-  - docker pull "amazon/aws-sam-cli-build-image-$SAM_RUNTIME"
-  - docker inspect "amazon/aws-sam-cli-build-image-$SAM_RUNTIME"
