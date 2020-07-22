@@ -1,39 +1,27 @@
 os: linux
 dist: xenial
-language: shell
+language: python
 
-jobs:
-  include:
-    - language: python
-      python: 3.7
-      install:
-        - pip3 install aws-sam-cli
-      script:
-        - sam build --use-container --debug --template sam--python3.7.yml
-      # This block will be executed even if the "script" fails.
-      # Here we show there is not issue with Travis and the
-      # image can be downloaded.
-      after_script:
-        - docker pull amazon/aws-sam-cli-build-image-python3.7
-        - docker inspect amazon/aws-sam-cli-build-image-python3.7
+python:
+  - 3.7
 
-    - language: node_js
-      node_js: 12
-      addons:
-        apt:
-          packages:
-            - python3
-            - python3-dev
-            - python3-pip
-            - python3-wheel
-            - python3-setuptools
-      install:
-        - pip3 install aws-sam-cli
-      script:
-        - sam build --use-container --debug --template sam--node12.yml
-      # This block will be executed even if the "script" fails.
-      # Here we show there is not issue with Travis and the
-      # image can be downloaded.
-      after_script:
-        - docker pull amazon/aws-sam-cli-build-image-nodejs12.x
-        - docker inspect amazon/aws-sam-cli-build-image-nodejs12.x
+cache:
+  - pip
+
+env:
+  jobs:
+    - SAM_RUNTIME=nodejs12.x
+    - SAM_RUNTIME=python3.7
+
+install:
+  - pip3 install aws-sam-cli
+
+script:
+  - sam build --use-container --debug --template "sam--$SAM_TEMPLATE.yml"
+
+# This block will be executed even if the "script" fails.
+# Here we show there is not issue with Travis and the
+# image can be downloaded.
+after_script:
+  - docker pull "amazon/aws-sam-cli-build-image-$SAM_RUNTIME"
+  - docker inspect "amazon/aws-sam-cli-build-image-$SAM_RUNTIME"
