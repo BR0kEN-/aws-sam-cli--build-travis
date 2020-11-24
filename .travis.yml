@@ -28,6 +28,8 @@ install:
   - docker info
   # Install AWS SAM CLI.
   - pip3 install "aws-sam-cli$SAM_VERSION"
+  # Show disk space.
+  - df -H
 
 script:
   - docker images --format '{{.ID}}' | xargs -I {} docker image inspect {}
